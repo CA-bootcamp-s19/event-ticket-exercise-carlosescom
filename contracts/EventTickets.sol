@@ -38,9 +38,9 @@ contract EventTickets {
         LogGetRefund should provide information about the refund requester and the number of tickets refunded.
         LogEndSale should provide infromation about the contract owner and the balance transferred to them.
     */
-    event LogBuyTickets(indexed);
-    event LogGetRefund(indexed);
-    event LogEndSale(indexed);
+    event LogBuyTickets(address indexed purchaser);
+    event LogGetRefund(address indexed requester, uint numberOfTickets);
+    event LogEndSale(address indexed owner, uint256 transfered);
     /*
         Create a modifier that throws an error if the msg.sender is not the owner.
     */
