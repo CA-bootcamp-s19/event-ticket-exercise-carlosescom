@@ -11,9 +11,9 @@ contract EventTickets {
         Use the appropriate keyword to create an associated getter function.
         Use the appropriate keyword to allow ether transfers.
      */
-    uint owner;
+    address payable public owner;
 
-    uint   TICKET_PRICE = 100 wei;
+    uint TICKET_PRICE = 100 wei;
 
     /*
         Create a struct called "Event".
@@ -40,7 +40,7 @@ contract EventTickets {
     */
     event LogBuyTickets(address indexed purchaser);
     event LogGetRefund(address indexed requester, uint numberOfTickets);
-    event LogEndSale(address indexed owner, uint256 transfered);
+    event LogEndSale(address indexed contractOwner, uint256 transfered);
     /*
         Create a modifier that throws an error if the msg.sender is not the owner.
     */
@@ -58,9 +58,7 @@ contract EventTickets {
 
     constructor(string memory description, string memory URL, uint numberOfTickets) public {
         owner = msg.sender;
-        myEvent = Event(description, URL,  numberOfTickets, 0, true );
-
-
+        myEvent = Event(description, URL,  numberOfTickets, 0, 0, true );
     }
 
     /*
@@ -93,8 +91,7 @@ contract EventTickets {
         public view
         returns(uint ticketCount)
     {
-       ticketCount = myEvent.buyers[buyeraddress];
-
+       ticketCount = myEvent[buyeraddress].totalTickets;
     }
 
     /*
